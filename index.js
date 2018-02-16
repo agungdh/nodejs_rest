@@ -2,6 +2,9 @@ var mysql = require('mysql')
 var express = require('express')
  
 var app = express()
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
  
 var con = mysql.createConnection({
   host: "localhost",
@@ -19,6 +22,10 @@ app.post('/', function(req, res) {
 		if (err) throw err;
 		res.json(result);
 	});
+})
+
+app.post('/notes', function(req, res) {
+  res.send(req.body.id + ' = ' + req.body.nama);
 })
 
 console.log('http://localhost:3000 bro !!!')
