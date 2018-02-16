@@ -1,9 +1,25 @@
+var mysql = require('mysql')
 var express = require('express')
  
 var app = express()
  
-app.get('/notes', function(req, res) {
-  res.json({notes: "This is your notebook. Edit this to start saving your notes!"})
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "biodata"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+});
+
+app.post('/', function(req, res) {
+	con.query("SELECT * FROM biodata", function (err, result, fields) {
+		if (err) throw err;
+		res.json(result);
+	});
 })
- 
+
+console.log('http://localhost:3000 bro !!!')
 app.listen(3000)
